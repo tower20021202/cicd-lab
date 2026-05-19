@@ -2,8 +2,7 @@ name: CI 114062599
 
 on:
   push:
-    branches:
-      -"**"
+    branches: -"**"
 
 permissions:
   contents: read
@@ -18,12 +17,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: "22"
+          node-version: '22'
           cache: npm
 
       - name: Install dependencies
         run: npm ci
-      
+
       - name: TypeScript typecheck
         run: npm run typecheck
 
