@@ -2,7 +2,8 @@ name: CI 114062599
 
 on:
   push:
-    branches: -"**"
+    branches:
+      - '**'
 
 permissions:
   contents: read
