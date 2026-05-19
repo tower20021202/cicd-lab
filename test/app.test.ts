@@ -17,7 +17,7 @@ describe('Fastify app', () => {
   it('GET / returns app message and version', async () => {
     const app = buildApp({ logger: false });
     const response = await app.inject({
-      method: 'GET',
+      method: 'GET', 
       url: '/'
     });
 
