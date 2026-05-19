@@ -9,7 +9,7 @@ describe('Fastify app', () => {
       url: '/health'
     });
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(500);
     expect(response.json()).toEqual({ status: 'ok' });
     await app.close();
   });
@@ -21,7 +21,7 @@ describe('Fastify app', () => {
       url: '/'
     });
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(500);
     expect(response.json().message).toBe('CI/CD Lab Fastify app is running');
     await app.close();
   });
