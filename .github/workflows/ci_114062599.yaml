@@ -35,3 +35,23 @@ jobs:
           mkdir -p reports
           set -o pipefail
           npm test -- --reporter=default --reporter=junit --outputFile.junit=reports/vitest-junit.xml 2>&1 | tee reports/test-output.txt
+
+      - name: Publish test summary
+        if: always()
+        run: |
+          echo "## Vitest Result" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          if [ -f reports/test-output.txt ]; then
+            tail -n 80 reports/test-output.txt >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No test output generated." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: vitest-report
+          path: reports/
+          if-no-files-found: warn
