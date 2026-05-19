@@ -1,0 +1,37 @@
+name: CI 114062599
+
+on:
+  push:
+    branches:
+      -"**"
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: TypeScript typecheck
+        run: npm run typecheck
+
+      - name: Prettier check
+        run: npm run format:check
+
+      - name: Run tests
+        run: |
+          mkdir -p reports
+          set -o pipefail
+          npm test -- --reporter=default --reporter=junit --outputFile.junit=reports/vitest-junit.xml 2>&1 | tee reports/test-output.txt
